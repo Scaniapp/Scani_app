@@ -29,18 +29,21 @@
 <body>
   <a href="index.html" class="back">&larr; Back to Scani</a>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: April 9, 2026</p>
+  <p class="updated">Last updated: May 28, 2026</p>
 
   <p>Scani ("we", "our", "the app") is a menu translation app that helps users understand Japanese restaurant menus. Your privacy matters to us.</p>
 
   <h2>What data we collect</h2>
-  <p>Scani does not collect, store, or share any personal information. We do not require account creation, login, or registration.</p>
+  <p>Scani does not collect personal information such as your name, email address, or location, and does not require account creation, login, or registration. We do collect anonymous usage data to understand how the app is used and improve it (see Analytics &amp; Usage Data below).</p>
 
   <h2>Camera and Photos</h2>
   <p>The app accesses your camera and photo library solely to scan menu images for translation. Photos are sent to Google's Gemini API for processing. If you submit a report, menu images and selected issues are sent to our team via a secure webhook to help improve translation quality. Photos are not stored on our servers beyond what is needed to process your report.</p>
 
   <h2>On-Device Processing</h2>
   <p>Text recognition (Apple Vision) and speech pronunciation (AVSpeechSynthesizer) run entirely on your device. No data is shared with third parties for these features.</p>
+
+  <h2>Analytics &amp; Usage Data</h2>
+  <p>Scani collects anonymous usage data — such as the number of scans, which features are used, app version, and language — to understand how the app is used and improve it. This data is tied to a random, anonymous identifier generated on your device; it is not linked to your name, email, or any account (Scani has none) and cannot be used to identify you. This data is stored on our Supabase backend.</p>
 
   <h2>Advertising</h2>
   <p>Scani uses Google AdMob to display ads. AdMob may collect device identifiers and usage data to serve relevant ads. This data is handled by Google according to their <a href="https://policies.google.com/privacy">privacy policy</a>.</p>
@@ -53,6 +56,7 @@
     <li>Google Gemini API (menu translation)</li>
     <li>Google AdMob (advertising)</li>
     <li>Google Apps Script (report processing)</li>
+    <li>Supabase (anonymous usage analytics storage)</li>
   </ul>
 
   <h2>Children's Privacy</h2>
