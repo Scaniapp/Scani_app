@@ -29,7 +29,7 @@
 <body>
   <a href="index.html" class="back">&larr; Back to Scani</a>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: June 3, 2026</p>
+  <p class="updated">Last updated: June 4, 2026</p>
 
   <p>Scani ("we", "our", "the app") is a menu translation app that helps users understand Japanese restaurant menus. Your privacy matters to us.</p>
 
@@ -38,6 +38,7 @@
 
   <h2>Camera and Photos</h2>
   <p>The app accesses your camera and photo library solely to scan menu images for translation. Photos are sent to Google's Gemini API for processing. If you submit a report, menu images and selected issues are sent to our team via a secure webhook to help improve translation quality. Photos are not stored on our servers beyond what is needed to process your report.</p>
+  <p>When a scan returns no results or fails (no menu items detected, response truncated, etc.), the menu image you took may be temporarily uploaded to our private storage for diagnostic purposes — so we can review what went wrong and improve the translation pipeline. These images are anonymous (no identifier embedded in the file), kept only as long as needed to investigate, and then permanently deleted. They are never shared with third parties.</p>
 
   <h2>On-Device Processing</h2>
   <p>Text recognition (Apple Vision) and speech pronunciation (AVSpeechSynthesizer) run entirely on your device. No data is shared with third parties for these features.</p>
@@ -56,7 +57,7 @@
     <li>Google Gemini API (menu translation)</li>
     <li>Google AdMob (advertising)</li>
     <li>Google Apps Script (report processing)</li>
-    <li>Supabase (anonymous usage analytics storage)</li>
+    <li>Supabase (anonymous usage analytics storage, temporary storage of failed-scan images for diagnostics)</li>
   </ul>
 
   <h2>Children's Privacy</h2>
