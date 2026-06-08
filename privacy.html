@@ -29,7 +29,7 @@
 <body>
   <a href="index.html" class="back">&larr; Back to Scani</a>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: June 4, 2026</p>
+  <p class="updated">Last updated: June 8, 2026</p>
 
   <p>Scani ("we", "our", "the app") is a menu translation app that helps users understand Japanese restaurant menus. Your privacy matters to us.</p>
 
@@ -46,6 +46,9 @@
   <h2>Analytics &amp; Usage Data</h2>
   <p>Scani collects anonymous usage data — such as the number of scans, app launches, onboarding completion, camera permission grants, which features are used, app version, and language — to understand how the app is used and improve it. This data is tied to a random, anonymous identifier generated on your device; it is not linked to your name, email, or any account (Scani has none) and cannot be used to identify you. This data is stored on our Supabase backend.</p>
 
+  <h2>Menu Items Corpus</h2>
+  <p>To improve translation quality over time and reduce reliance on third-party AI for items we've already seen, Scani uploads the Japanese-language text of menu items extracted from your scans to our private backend. Only the Japanese title text is sent — no images, no translations, no prices, and no identifier of any kind, so the data cannot be linked back to you or your device. These titles describe public restaurant menu items and contain no personal information.</p>
+
   <h2>Advertising</h2>
   <p>Scani uses Google AdMob to display ads. AdMob may collect device identifiers and usage data to serve relevant ads. Per-impression ad revenue values returned by AdMob are also logged alongside the anonymous identifier so we can attribute revenue to scan sessions. This data is handled by Google according to their <a href="https://policies.google.com/privacy">privacy policy</a>.</p>
 
@@ -57,7 +60,7 @@
     <li>Google Gemini API (menu translation)</li>
     <li>Google AdMob (advertising)</li>
     <li>Google Apps Script (report processing)</li>
-    <li>Supabase (anonymous usage analytics storage, temporary storage of failed-scan images for diagnostics)</li>
+    <li>Supabase (anonymous usage analytics storage, temporary storage of failed-scan images for diagnostics, menu items corpus storage)</li>
   </ul>
 
   <h2>Children's Privacy</h2>
