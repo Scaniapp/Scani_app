@@ -29,40 +29,55 @@
 <body>
   <a href="index.html" class="back">&larr; Back to Scani</a>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: June 8, 2026</p>
+  <p class="updated">Last updated: October 5, 2026</p>
 
-  <p>Scani ("we", "our", "the app") is a menu translation app that helps users understand Japanese restaurant menus. Your privacy matters to us.</p>
+  <p>Scani ("we", "our", "the app") is a translation app that reads any photo with text — menus, receipts, signs, documents and more. Your privacy matters to us.</p>
 
   <h2>What data we collect</h2>
   <p>Scani does not collect personal information such as your name, email address, or location, and does not require account creation, login, or registration. We do collect anonymous usage data to understand how the app is used and improve it (see Analytics &amp; Usage Data below).</p>
 
   <h2>Camera and Photos</h2>
-  <p>The app accesses your camera and photo library solely to scan menu images for translation. Photos are sent to Google's Gemini API for processing. If you submit a report, menu images and selected issues are sent to our team via a secure webhook to help improve translation quality. Photos are not stored on our servers beyond what is needed to process your report.</p>
-  <p>When a scan returns no results or fails (no menu items detected, response truncated, etc.), the menu image you took may be temporarily uploaded to our private storage for diagnostic purposes — so we can review what went wrong and improve the translation pipeline. These images are anonymous (no identifier embedded in the file), kept only as long as needed to investigate, and then permanently deleted. They are never shared with third parties.</p>
-  <p>From version 1.0.13 onwards, Scani also uploads the normalized image of every successful scan to our private storage. Only the menu-detection–cropped image is sent (no faces or surrounding context), with no embedded identifier. These images are used to build a perceptual-hash cache of common menus — so future scans of the same menu can be served from the cache without re-querying the AI — and may later be used to train an on-device translation model. They are never shared with third parties and can be deleted on request.</p>
+  <p>The app accesses your camera and photo library solely to scan images for translation. Photos and the text read from them are sent to Google Gemini through Firebase AI Logic, a Google service. Under Google's paid-service terms, Google does not use this content to improve its products. To make sure requests come from a genuine copy of Scani, the app uses Firebase App Check with Apple's App Attest: a device attestation is exchanged with Apple and Google, and Firebase may create a random installation identifier for this purpose. This does not identify you and is not stored by Scani. If you submit a report, the image and the scan result are sent to our private storage to help improve translation quality.</p>
+  <p>Scani also uploads the image of every scan — successful, failed or cancelled — to our private storage. Each image is stored under a random file name, without metadata, and linked to the same anonymous identifier as the usage data. Images are kept for up to 12 months, then deleted; they are never shared with third parties and can be deleted earlier on request.</p>
+  <p>Data received by our Supabase backend (usage data, scan images and scan content) is regularly copied to the developer's private computer and then removed from Supabase; the 12-month limit applies to these copies.</p>
 
   <h2>On-Device Processing</h2>
-  <p>Text recognition (Apple Vision) and speech pronunciation (AVSpeechSynthesizer) run entirely on your device. No data is shared with third parties for these features.</p>
+  <p>Live Text on the photo you are viewing and speech pronunciation (AVSpeechSynthesizer) run on your device. Reading and translating your scans is done by Google Gemini (see Camera and Photos above).</p>
 
   <h2>Analytics &amp; Usage Data</h2>
-  <p>Scani collects anonymous usage data — such as the number of scans, app launches, onboarding completion, camera permission grants, which features are used, app version, and language — to understand how the app is used and improve it. This data is tied to a random, anonymous identifier generated on your device; it is not linked to your name, email, or any account (Scani has none) and cannot be used to identify you. This data is stored on our Supabase backend.</p>
+  <p>Scani collects anonymous usage data — such as the number of scans, app launches, onboarding completion, camera permission grants, which features are used, how long results are viewed, items added to the order list, error codes, the processing cost and duration of each scan, app version, and language — to understand how the app is used and improve it. This data is tied to a random, anonymous identifier generated on your device; it is not linked to your name, email, or any account (Scani has none) and cannot be used to identify you. This data is stored on our Supabase backend.</p>
+  <p>At launch, Scani also fetches a small version file from scaniapp.com to check for updates; like any web server, our hosting provider may log your IP address.</p>
 
-  <h2>Menu Items Corpus</h2>
-  <p>To improve translation quality over time and reduce reliance on third-party AI for items we've already seen, Scani uploads the Japanese-language text of menu items extracted from your scans to our private backend. Only the Japanese title text is sent — no images, no translations, no prices, and no identifier of any kind, so the data cannot be linked back to you or your device. These titles describe public restaurant menu items and contain no personal information.</p>
+  <h2>Scan Content</h2>
+  <p>To improve translation quality over time, Scani uploads the text read from each scan and the result shown to you (original text, translations, prices) to our private backend, tied to the same anonymous identifier as the usage data. What you scan may itself contain personal information (for example a letter or a receipt). This content is never shared with third parties and is kept for up to 12 months, then deleted.</p>
+  <p>From menus and receipts, we may extract dish names, their translations, category and description into a shared dish database that helps all Scani users. These entries are detached from any identifier: they contain no device identifier, no date or place of the scan, and no other text from what you scanned. Because they can no longer be linked to you, they may be kept without a time limit and shown to other users.</p>
 
   <h2>Advertising</h2>
-  <p>Scani uses Google AdMob to display ads. AdMob may collect device identifiers and usage data to serve relevant ads. Per-impression ad revenue values returned by AdMob are also logged alongside the anonymous identifier so we can attribute revenue to scan sessions. This data is handled by Google according to their <a href="https://policies.google.com/privacy">privacy policy</a>.</p>
+  <p>Scani uses Google AdMob to display ads. Scani does not ask for permission to track you, so your device's advertising identifier is not shared with AdMob. AdMob may still collect limited device information (including an app-vendor identifier that does not identify you across other developers' apps) and usage information (for example to count impressions, limit how often an ad is shown and detect fraud), and ads may be chosen based on context. Per-impression ad revenue values returned by AdMob are also logged alongside the anonymous identifier so we can attribute revenue to scan sessions. This data is handled by Google according to their <a href="https://policies.google.com/privacy">privacy policy</a>.</p>
 
   <h2>On-Device Data</h2>
-  <p>Scan history and preferences are stored locally on your device. This data never leaves your device and is deleted when you uninstall the app.</p>
+  <p>Scan history and preferences are stored locally on your device and are deleted when you uninstall the app.</p>
 
   <h2>Third-Party Services</h2>
   <ul>
-    <li>Google Gemini API (menu translation)</li>
+    <li>Google Gemini, through Google Firebase AI Logic (reading and translation)</li>
+    <li>Google Firebase App Check, with Apple App Attest (verifying that requests come from the genuine app)</li>
     <li>Google AdMob (advertising)</li>
-    <li>Google Apps Script (report processing)</li>
-    <li>Supabase (anonymous usage analytics storage, temporary storage of failed-scan images for diagnostics, menu items corpus storage)</li>
+    <li>Google Search (photos of a dish or item, loaded in an embedded web page when you tap it — Google receives the item name, your IP address and its own cookies, under Google's privacy policy)</li>
+    <li>Supabase (storage of anonymous usage data, scan images and scan content)</li>
   </ul>
+
+  <h2>Who We Are</h2>
+  <p>Scani is developed and operated by Mathias Merlot (Japan), who is responsible for the processing of your data. Contact: <a href="mailto:scani.app.official@gmail.com">scani.app.official@gmail.com</a>.</p>
+
+  <h2>Legal Basis and Retention</h2>
+  <p>We process your photos and scans to provide the service you ask for (reading and translating them). Usage data and scan content are processed on the basis of our legitimate interest in improving Scani, and are kept for up to 12 months; only the anonymous dish database described above is kept longer. Advertising is provided by Google AdMob under Google's own terms.</p>
+
+  <h2>Your Rights</h2>
+  <p>You can ask to access, correct or delete the data linked to your device, or object to its processing, by writing to the address above. Since Scani has no accounts, tell us roughly when and where you used the app so we can find it. You can also lodge a complaint with the data protection authority of your country.</p>
+
+  <h2>International Transfers</h2>
+  <p>Google (Gemini, Firebase, AdMob) and Supabase may process data outside your country, including outside the European Union, under their standard contractual safeguards.</p>
 
   <h2>Children's Privacy</h2>
   <p>Scani is not directed at children under 13. We do not knowingly collect data from children.</p>
