@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="lt"><head><meta charset="utf-8"/>
+<style>body{margin:0;font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1C1C1E}svg{display:block}
+.ligne{font-family:-apple-system,"SF Pro Display",system-ui,sans-serif;font-size:40px;font-weight:800;letter-spacing:-1px;line-height:1.08;white-space:nowrap;overflow:hidden}</style><style>
+html,body{background:transparent!important;overflow:hidden}
+.a-cell{opacity:0;translate:0 8px;transition:opacity .3s ease-out,translate .3s ease-out}
+.a-cell.on{opacity:1;translate:0 0}
+.a-fade{opacity:0;transition:opacity .35s ease-out}
+.a-fade.on{opacity:1}
+/* la phrase au serveur : chaque morceau devient net, au rythme des cellules (pas de translate sur du texte en ligne) */
+.a-mot{opacity:0;filter:blur(6px);transition:opacity .45s cubic-bezier(.2,.8,.2,1),filter .45s cubic-bezier(.2,.8,.2,1)}
+.a-mot.on{opacity:1;filter:blur(0)}
+/* dans le bloc restaurant, la coque porte une barre d'état fixe : celle de l'écran s'efface */
+.sans-etat .a-etat{visibility:hidden}
+.a-voile{opacity:0;transition:opacity .4s ease-out}
+.a-voile.on{opacity:1}
+.a-sheet{translate:0 105%;transition:translate .5s cubic-bezier(.2,.9,.3,1)}
+.a-sheet.on{translate:0 0}
+@media (prefers-reduced-motion:reduce){.a-cell,.a-mot,.a-fade,.a-voile,.a-sheet{transition:none!important}.a-shutter{animation:none}}
+</style></head>
+<body><div style="width:393px;height:852px;position:relative;overflow:hidden;background:#F8FBFC;">
+<div style="position:absolute;top:59px;left:8px;width:377px;height:44px">
+<div style="position:absolute;top:0;left:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center"><svg fill="none" height="22" stroke="#1C1C1E" stroke-linecap="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M6 6l12 12M18 6 6 18"></path></svg></div>
+<div style="position:absolute;top:3px;left:134.5px;width:108px;height:38px;border-radius:19px;background:#E7E7E8">
+<div style="position:absolute;top:3px;left:3px;width:48px;height:32px;border-radius:16px;background:#F8FBFC;box-shadow:0 1px 2px rgba(0,0,0,.10)"></div>
+<div style="position:absolute;top:0;left:0;width:54px;height:38px;display:flex;align-items:center;justify-content:center"><svg fill="none" height="16" stroke="#1C1C1E" stroke-linecap="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><path d="M9 6h11M9 12h11M9 18h11"></path><circle cx="4" cy="6" fill="#1C1C1E" r="1.4" stroke="none"></circle><circle cx="4" cy="12" fill="#1C1C1E" r="1.4" stroke="none"></circle><circle cx="4" cy="18" fill="#1C1C1E" r="1.4" stroke="none"></circle></svg></div>
+<div style="position:absolute;top:0;left:54px;width:54px;height:38px;display:flex;align-items:center;justify-content:center"><svg fill="none" height="16" stroke="#1C1C1E" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><rect height="15" rx="2.5" width="18" x="3" y="4.5"></rect><circle cx="8.5" cy="9.5" r="1.6"></circle><path d="m21 16-5-5-9 8.5"></path></svg></div>
+</div>
+<div style="position:absolute;top:0;right:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center"><svg fill="#1C1C1E" height="22" viewbox="0 0 24 24" width="22"><circle cx="5" cy="12" r="1.7"></circle><circle cx="12" cy="12" r="1.7"></circle><circle cx="19" cy="12" r="1.7"></circle></svg></div>
+</div><div style="position:absolute;top:103px;left:0;width:393px;height:44px;box-sizing:border-box;padding:0 16px;display:flex;align-items:center;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Vištienos terijaki pietų dėžutė</div><div style="position:absolute;top:147px;left:0;width:393px;display:flex;flex-direction:column"><div class="a-cell" style="padding:8px 16px 4px 16px"><div style="background:#F2F2F6;border-radius:12px;padding:14px 12px;display:flex;align-items:flex-start;gap:8px"><svg height="14" style="margin-top:1.5px;flex-shrink:0" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" fill="rgba(28,28,30,0.65)" r="11"></circle><path d="M12 11v6" stroke="#F2F2F6" stroke-linecap="round" stroke-width="2.6"></path><circle cx="12" cy="7.3" fill="#F2F2F6" r="1.6"></circle></svg>
+<div style="flex-grow:1;min-width:0;font-size:13px;line-height:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Energinė vertė: 680 kcal · Gamintojas: Smile Foods Co., Ltd., Tokijas</div><svg fill="none" height="12" stroke="rgba(28,28,30,0.45)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" style="margin-top:3px;flex-shrink:0" viewbox="0 0 24 24" width="12"><path d="m6 9 6 6 6-6"></path></svg></div></div><div class="a-cell" style="position:relative;padding:12px 16px;display:flex;align-items:flex-start;gap:12px">
+<div style="width:44px;height:44px;flex-shrink:0;border-radius:6px;background:#E7E7E8;display:flex;align-items:center;justify-content:center"><svg fill="none" height="19" stroke="#B31721" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="19"><path d="M10.3 4.3 2.6 17.6A2 2 0 0 0 4.3 20.6h15.4a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0Z"></path><path d="M12 9.5v4M12 17h.01"></path></svg></div>
+<div style="flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:4px"><div style="font-size:15px;font-weight:600">Alergenai</div><div style="font-size:15px;line-height:20px;color:#B31721">Kviečiai, Kiaušiniai, Sojos, Vištiena</div></div>
+<div style="position:absolute;left:72px;right:0;bottom:0;height:.5px;background:#E7E7E8"></div></div><div class="a-cell" style="position:relative;padding:12px 16px;display:flex;align-items:flex-start;gap:12px">
+<div style="width:44px;height:44px;flex-shrink:0;border-radius:6px;background:#E7E7E8;display:flex;align-items:center;justify-content:center"><svg fill="none" height="18" stroke="rgba(28,28,30,0.65)" stroke-linecap="round" stroke-width="2.2" viewbox="0 0 24 24" width="18"><path d="M9 6h11M9 12h11M9 18h11"></path><circle cx="4" cy="6" fill="rgba(28,28,30,0.65)" r="1.3" stroke="none"></circle><circle cx="4" cy="12" fill="rgba(28,28,30,0.65)" r="1.3" stroke="none"></circle><circle cx="4" cy="18" fill="rgba(28,28,30,0.65)" r="1.3" stroke="none"></circle></svg></div>
+<div style="flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:4px"><div style="font-size:15px;font-weight:600">Sudėtis</div><div style="font-size:15px;line-height:20px;color:rgba(28,28,30,.65)">Ryžiai, Vištiena, Sojų padažas, Cukrus, Mirinas, Fermentuotas prieskoninis padažas, Krakmolas, Augalinis aliejus, Svogūnų laiškai, Imbieras, Česnakas, Druska, Prieskoniai, Mielių ekstraktas</div></div>
+<div style="position:absolute;left:72px;right:0;bottom:0;height:.5px;background:#E7E7E8"></div></div><div class="a-cell" style="position:relative;padding:12px 16px;display:flex;align-items:flex-start;gap:12px">
+<div style="width:44px;height:44px;flex-shrink:0;border-radius:6px;background:#E7E7E8;display:flex;align-items:center;justify-content:center"><svg fill="none" height="19" stroke="rgba(28,28,30,0.65)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="19"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5.5M12 7.8h.01"></path></svg></div>
+<div style="flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:4px"><div style="font-size:15px;font-weight:600">Išsami informacija</div><div style="font-size:15px;line-height:20px;color:rgba(28,28,30,.65)">Grynasis kiekis: 1 porcija</div><div style="font-size:15px;line-height:20px;color:rgba(28,28,30,.65)">Šildyti mikrobangų krosnelėje: 500W - 2 min 30 sek, 600W - 2 min</div><div style="font-size:15px;line-height:20px;color:rgba(28,28,30,.65)">Laikyti vėsioje, sausoje vietoje, saugoti nuo tiesioginių saulės spindulių</div><div style="font-size:15px;line-height:20px;color:rgba(28,28,30,.65)">Galioja iki 2024-05-12 23:00 val.</div></div>
+<div style="position:absolute;left:72px;right:0;bottom:0;height:.5px;background:#E7E7E8"></div></div><div class="a-cell" style="position:relative;padding:12px 16px;display:flex;align-items:flex-start;gap:12px">
+<div style="width:44px;height:44px;flex-shrink:0;border-radius:6px;background:#E7E7E8;display:flex;align-items:center;justify-content:center"><svg fill="none" height="19" stroke="rgba(28,28,30,0.65)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="19"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"></path></svg></div>
+<div style="flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:4px"><div style="font-size:15px;font-weight:600">Patarimai</div><div style="font-size:15px;line-height:20px;color:rgba(28,28,30,.65)">Po šildymo atsargiai išimkite iš mikrobangų krosnelės, nes pakuotė bus karšta</div></div>
+<div style="position:absolute;left:72px;right:0;bottom:0;height:.5px;background:#E7E7E8"></div></div></div><div class="a-etat" style="position:absolute;top:0;left:0;width:393px;height:54px;color:#1C1C1E">
+<div style="position:absolute;top:11px;left:133.5px;width:126px;height:37px;border-radius:19px;background:#000"></div>
+<div style="position:absolute;top:0;left:52px;height:54px;display:flex;align-items:center;font-size:17px;font-weight:600">9:41</div>
+<div style="position:absolute;top:0;right:30px;height:54px;display:flex;align-items:center;gap:6px">
+<svg fill="#1C1C1E" height="12" viewbox="0 0 18 12" width="18"><rect height="4" rx="1" width="3" x="0" y="8"></rect><rect height="6.5" rx="1" width="3" x="5" y="5.5"></rect><rect height="9" rx="1" width="3" x="10" y="3"></rect><rect height="12" rx="1" width="3" x="15" y="0"></rect></svg>
+<svg fill="#1C1C1E" height="12" viewbox="0 0 16 12" width="16"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0L8 11.5Z"></path><path d="M3.3 6.8a6.7 6.7 0 0 1 9.4 0l-1.3 1.3a4.9 4.9 0 0 0-6.8 0L3.3 6.8Z"></path><path d="M1 4.5a10 10 0 0 1 14 0l-1.3 1.3a8.2 8.2 0 0 0-11.4 0L1 4.5Z"></path></svg>
+<svg fill="#1C1C1E" height="13" viewbox="0 0 27 13" width="27"><rect fill="none" height="12" opacity="0.4" rx="3.5" stroke="#1C1C1E" width="23" x="0.5" y="0.5"></rect><rect height="9" rx="2" width="20" x="2" y="2"></rect><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2Z" opacity="0.4"></path></svg>
+</div></div>
+<div style="position:absolute;bottom:8px;left:129.5px;width:134px;height:5px;border-radius:3px;background:#1C1C1E"></div>
+</div><script>
+(function () {
+  const Q = s => [...document.querySelectorAll(s)];
+  const tous = Q('.a-cell,.a-mot,.a-fade,.a-voile,.a-sheet');
+  const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let minuteurs = [];
+  function montre(el, d) { minuteurs.push(setTimeout(() => el.classList.add('on'), d)); }
+  function reset() {
+    minuteurs.forEach(clearTimeout); minuteurs = [];
+    tous.forEach(el => { el.style.transition = 'none'; el.classList.remove('on'); });
+    document.body.offsetWidth;
+    tous.forEach(el => el.style.transition = '');
+  }
+  function jouer() {
+    reset();
+    if (calme) { tous.forEach(el => el.classList.add('on')); return; }
+    let t = 250;
+    const avant = Q('.a-voile,.a-sheet');
+    avant.forEach(el => montre(el, 120));
+    if (avant.length) t += 380;
+    Q('.a-cell').forEach((el, i) => montre(el, t + i * 110));
+    t += Q('.a-cell').length * 110;
+    Q('.a-mot').forEach((el, i) => montre(el, t + i * 160));
+    t += Q('.a-mot').length * 160;
+    Q('.a-fade').forEach((el, i) => montre(el, t + i * 320));
+  }
+  addEventListener('message', e => { if (e.data === 'jouer') jouer(); if (e.data === 'reset') reset(); });
+  parent.postMessage({pret: location.pathname}, '*');
+})();
+</script></body></html>
