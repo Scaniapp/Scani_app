@@ -29,7 +29,9 @@
   </style>
 </head>
 <body>
-  <a href="index.html" class="back">&larr; Back to Scani</a>
+  <a href="/" class="back" onclick="if (document.referrer.indexOf(location.origin) === 0 &amp;&amp; history.length &gt; 1) { history.back(); return false; }">&larr; Back to Scani</a>
+  <!-- Venu du site : un vrai RETOUR (la page revient telle quelle, au même endroit, sans recharger) ;
+       arrivé ici directement : l'accueil. -->
   <h1>Scani Support</h1>
 
   <p>Need help? Have feedback? Found a bug?</p>
