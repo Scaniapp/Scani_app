@@ -176,7 +176,7 @@ footer a:hover{color:#fff}
 <section class="carrousel" id="carrousel">
   <div class="tete"><img class="app-ic" src="img/icon-256.webp" alt="Scani"></div>
   <div class="defile" id="defile">
-    <div class="diapo ecran entree" id="entree"><div class="txt"><h1 class="h"><span>Free. Unlimited.</span><span class="acc">No account.</span></h1><p class="sous">Scan as much as you want.</p></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="01" title="The Scani camera pointed at a Japanese menu"></iframe></div></div></div></div>
+    <div class="diapo ecran entree" id="entree"><div class="txt"><h1 class="h"><span>Point. Scan.</span><span class="acc">Understand.</span></h1><p class="sous">Free. Unlimited. No account.</p></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="01" title="The Scani camera pointed at a Japanese menu"></iframe></div></div></div></div>
     <div class="diapo ecran" id="s02"><div class="txt"><h2 class="h"><span>Any menu,</span><span class="acc">in your language.</span></h2><p class="sous">Every dish, every price.</p></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="02" title="A Japanese menu translated into English, with prices"></iframe></div></div></div></div>
     <div class="diapo ecran" id="s03"><div class="txt"><h2 class="h"><span>Order</span><span class="acc">in their language.</span></h2><p class="sous">Show it — or let Scani say it.</p></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="03" title="The order written in Japanese for the staff"></iframe></div></div></div></div>
     <div class="diapo ecran" id="s09"><div class="txt"><h2 class="h"><span>Ask anything,</span><span class="acc">out loud.</span></h2><p class="sous">Water, the bill, less spicy — spoken for you.</p></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="09" title="Quick phrases: toilet, water, bill and more"></iframe></div></div></div></div>
@@ -340,7 +340,10 @@ function appliquer(L) {
   document.documentElement.lang = L;
   document.documentElement.dir = T.rtl ? 'rtl' : 'ltr';
   // l'entrée : la promesse de l'onboarding et son bouton ; puis les titres des captures
-  $('#entree .txt').innerHTML = `<h1 class="h"><span>${esc(T.promesse[0])}</span><span class="acc">${esc(T.promesse[1])}</span></h1><p class="sous">${esc(T.promesse[2])}</p>`;
+  // CE QUE FAIT L'APP en titre (le titre de l'onboarding), POURQUOI LA PRENDRE dessous
+  // (la promesse) ; pas d'espace après un point idéographique (。).
+  const promesse = T.promesse[0] + (/[。．]$/.test(T.promesse[0]) ? '' : ' ') + T.promesse[1];
+  $('#entree .txt').innerHTML = `<h1 class="h"><span>${esc(T.legendes['01'][0])}</span><span class="acc">${esc(T.legendes['01'][1])}</span></h1><p class="sous">${esc(promesse)}</p>`;
   ['02', '03', '09', '05', '06', '07', '08'].forEach(nn => $('#s' + nn + ' .txt').innerHTML = legende(nn));
   document.querySelectorAll('iframe[data-n]').forEach(f => { const src = `ecrans/${L}/${f.dataset.n}.html`; if (f.getAttribute('src') !== src) f.src = src; });
   poserCartes(L);
