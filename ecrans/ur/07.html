@@ -3,12 +3,12 @@
 <style>body{margin:0;font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1C1C1E}svg{display:block}
 .ligne{font-family:-apple-system,"SF Pro Display",system-ui,sans-serif;font-size:40px;font-weight:800;letter-spacing:0;line-height:1.08;white-space:nowrap;overflow:hidden}</style><style>
 html,body{background:transparent!important;overflow:hidden}
-.a-cell{opacity:0;translate:0 8px;transition:opacity .3s ease-out,translate .3s ease-out}
+.a-cell{opacity:.18;translate:0 8px;transition:opacity .3s ease-out,translate .3s ease-out}
 .a-cell.on{opacity:1;translate:0 0}
-.a-fade{opacity:0;transition:opacity .35s ease-out}
+.a-fade{opacity:.18;transition:opacity .35s ease-out}
 .a-fade.on{opacity:1}
 /* la phrase au serveur : chaque morceau devient net, au rythme des cellules (pas de translate sur du texte en ligne) */
-.a-mot{opacity:0;filter:blur(6px);transition:opacity .45s cubic-bezier(.2,.8,.2,1),filter .45s cubic-bezier(.2,.8,.2,1)}
+.a-mot{opacity:.18;filter:blur(6px);transition:opacity .45s cubic-bezier(.2,.8,.2,1),filter .45s cubic-bezier(.2,.8,.2,1)}
 .a-mot.on{opacity:1;filter:blur(0)}
 /* dans le bloc restaurant, la coque porte une barre d'état fixe : celle de l'écran s'efface */
 .sans-etat .a-etat{visibility:hidden}
