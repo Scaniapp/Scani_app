@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scani — Point. Scan. Understand.</title>
+<meta name="description" content="Menus, receipts, signs, labels, remotes — Scani reads anything you can't and explains it in your language. Free. Unlimited. No account.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:title" content="Scani — Point. Scan. Understand.">
+<meta property="og:description" content="Menus, signs, labels — anything, in your language. Free. Unlimited. No account.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1C1C1E; --ink2:rgba(28,28,30,.62);
+  --teal:#0E7C90; --mist:#EAF3F5;   /* --mist : le SEUL fond du site, partout */
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,"Hiragino Sans","Noto Sans JP",sans-serif;
+  --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",system-ui,sans-serif;
+  --hautpage:calc(env(safe-area-inset-top) + 8px);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --sous:0px;
+}
+/* trois sections, un arrêt par geste. Chacune fait la GRANDE hauteur (barre de Safari repliée) : la suivante ne
+   dépasse jamais dessous ; son contenu tient dans la petite (barre dépliée) grâce à --sous, FIXE : rien ne
+   bouge ni ne grandit quand la barre se replie */
+@supports (height:100svh){:root{--sous:calc(100lvh - 100svh)}}
+.carrousel,.centre{scroll-snap-align:start;scroll-snap-stop:always}
+/* LE BAS DE LA DERNIÈRE SECTION (2026-10-03, Mathias sur le Mac) : plus haute que la fenêtre, elle ne
+   s'aimantait que par son haut — l'aimantation ramenait en haut, le pied de page restait inatteignable.
+   Un second point, sur le bas du pied. Sur le téléphone la section tient dans l'écran : les deux points
+   tombent au même endroit, rien ne change. */
+footer{scroll-snap-align:end}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;-webkit-text-size-adjust:100%;background:var(--mist)}
+body{font-family:var(--sans);color:var(--ink);background:var(--mist);-webkit-font-smoothing:antialiased;line-height:1.5}
+img{display:block}
+a{color:inherit}
+.acc{color:var(--teal)}
+.h{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:1.04}
+.h span{display:block}
+
+/* ── La page ─────────────────────────────── */
+/* Simple, à la structured.app (Mathias, 2026-10-02) : trois sections, un geste = une section. */
+/* le haut : un carrousel de la hauteur de l'écran (100lvh, contenu dans 100svh via --sous — il ne bouge pas
+   quand la barre de Safari se replie). L'icône (en haut) et le bouton (au pouce) ne bougent jamais ; entre les deux,
+   seuls le titre et le téléphone glissent. La diapo est CENTRÉE et les TÉLÉPHONES voisins dépassent de chaque
+   côté : c'est l'indice qu'on peut glisser (comme apple.com). Téléphones ENTIERS, même taille.
+   --l : largeur d'une diapo = celle du téléphone + 24 (posée par cadrer). */
+.carrousel{--l:calc(100vw - 96px);background:var(--mist);height:100vh;height:100lvh;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.carrousel .tete{flex:none;padding-top:var(--hautpage);display:flex;justify-content:center}
+.carrousel .tete .app-ic{width:52px;height:52px;border-radius:12px;box-shadow:0 10px 24px rgba(8,50,60,.16)}
+.carrousel .pied{flex:none;display:flex;justify-content:center;padding:0 16px calc(10px + env(safe-area-inset-bottom) + var(--sous))}
+.carrousel .defile{flex:1;min-height:0;display:flex;gap:12px;padding:0 calc((100vw - var(--l)) / 2);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.carrousel .defile::-webkit-scrollbar{display:none}
+.diapo{flex:none;width:var(--l);height:100%;scroll-snap-align:center;scroll-snap-stop:always}
+.diapo.ecran{padding:12px 0 22px}   /* 22 : la place de l'ombre du téléphone, sinon coupée net */
+/* titre + téléphone forment un bloc centré : pas de vide sous les téléphones des diapos moins chargées */
+.diapo.ecran{justify-content:center}
+/* le titre prend la largeur de l'écran (centré, il déborde de la diapo étroite) ; seul celui du centre se voit */
+.diapo .txt{width:min(calc(100vw - 32px),640px);transition:opacity .3s}
+.diapo:not(.ici) .txt{opacity:0}
+.diapo:not(.ici){cursor:pointer;-webkit-tap-highlight-color:transparent}
+.diapo .tel{flex:none;height:calc(699px * var(--k))}
+/* les flèches, pour la souris seulement */
+.fleche{display:none;position:absolute;top:50%;translate:0 -50%;width:48px;height:48px;border-radius:24px;border:0;background:#fff;color:var(--ink);font-size:22px;cursor:pointer;box-shadow:0 0 0 .5px rgba(8,50,60,.1);z-index:3}
+.fleche[data-sens="-1"]{left:max(16px,3vw)}.fleche[data-sens="1"]{right:max(16px,3vw)}
+.fleche:active{scale:.94}
+@media (hover:hover) and (pointer:fine){.fleche{display:block}}
+
+/* ── Badge App Store ─────────────────────── */
+.store{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 20px 0 16px;border-radius:15px;background:var(--ink);color:#fff;text-decoration:none;transition:transform .25s var(--ease)}
+.store:hover{transform:translateY(-2px)}
+.store svg{width:24px;height:24px;fill:currentColor;flex-shrink:0}
+.store small{display:block;font-size:11px;opacity:.8;line-height:1.1}
+.store b{display:block;font-size:19px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+
+/* ── Les écrans de l'app ─────────────────── */
+.ecran{display:flex;flex-direction:column;align-items:center;padding:var(--hautpage) 16px 0}
+.ecran .txt{text-align:center;flex-shrink:0}
+.ecran .h{font-size:clamp(26px,7.4vw,42px)}
+.ecran .sous{font-size:clamp(15px,4vw,18px);color:var(--ink2);margin-top:6px;line-height:1.35}
+.tel{flex:1;min-height:0;width:100%;position:relative;margin-top:14px}
+/* le socle : la MÊME coque pour tous les écrans (cotes des captures : 330 × 699, bord 7, rayon 51) */
+.socle{position:absolute;left:50%;top:50%;width:330px;height:699px;padding:7px;border-radius:51px;background:#1C1C1E;box-shadow:0 8px 14px rgba(8,60,72,.15),0 2px 6px rgba(8,60,72,.08);transform:translate(-50%,0) scale(var(--k,1));
+  /* accroché en haut (sous le sous-titre) : il ne grandit que vers le bas, sans saut */
+  top:0;transform-origin:50% 0;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.vitre{width:316px;height:685px;border-radius:44px;overflow:hidden;position:relative;background:#F8FBFC}
+.vitre iframe{display:block;border:0;width:393px;height:852px;transform:scale(.8041);transform-origin:0 0;pointer-events:none;background:transparent;color-scheme:light}
+/* la photo scannée, posée de travers contre la coque ; elle arrive avec l'écran */
+.carte{position:absolute;border:5px solid #fff;border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(8,40,50,.25);opacity:0;scale:.82;translate:0 24px;transition:opacity .35s ease-out .12s,scale .55s cubic-bezier(.2,1.3,.4,1) .12s,translate .55s cubic-bezier(.2,1.3,.4,1) .12s}
+.carte img{display:block;width:100%;height:100%;object-fit:cover}
+.vu .carte{opacity:1;scale:1;translate:0 0}
+
+
+
+
+/* ── Sections de fin ─────────────────────── */
+/* les sections du bas font chacune un écran plein (comme le carrousel) */
+.centre{min-height:100vh;min-height:100lvh;display:flex;flex-direction:column;justify-content:center;padding:var(--hautpage) 16px calc(32px + var(--sous))}
+.centre .in{width:100%;max-width:1100px;margin:0 auto}
+
+
+/* Neuf types */
+/* la fin : turquoise, tout réuni (types, 50 langues, badge, pied de page) */
+/* Safari 26 teinte ses barres avec le fond de la PAGE : sur cette section, la page passe en turquoise
+   (le carrousel a son propre fond, il ne change pas) */
+html.fond-turquoise,html.fond-turquoise body{background:var(--teal)}
+/* …mais il ne suit pas le fond en direct : il prend la couleur d'un élément FIXE collé au bas de l'écran
+   (la « bande » d'avant). Ici on s'en sert : une bande turquoise, seulement sur cette section */
+.teinte{display:none;position:fixed;left:0;right:0;bottom:0;height:44px;background:var(--teal);pointer-events:none}
+html.fond-turquoise .teinte{display:block}
+.kinds{background:var(--teal);color:#fff;text-align:center;padding-bottom:var(--sous)}
+.kinds .in{margin-top:auto}
+.fin-store{margin-top:32px}
+.kinds .acc{color:rgba(255,255,255,.62)}
+.kinds .h{font-size:clamp(36px,5vw,64px)}
+.kinds .sous{font-size:clamp(17px,1.8vw,21px);font-weight:600;color:#fff;margin:12px auto 28px}
+/* les 9 types : une pastille d'un mot chacun (icône + nom), comme les puces de l'app */
+.puces9{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:640px;margin:0 auto}
+.kind{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px 0 12px;border-radius:22px;background:#fff;color:var(--ink)}
+.kind svg{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kind b{font-size:15px;font-weight:600;letter-spacing:-.01em}
+
+/* Fin */
+/* au-dessus de la bande .teinte (fixe, 44 px, même turquoise) : dessous, les liens Privacy/Support
+   étaient à l'écran mais invisibles (vu par Mathias le 2026-10-06) */
+footer{position:relative;z-index:2;margin-top:auto;color:rgba(255,255,255,.72);font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:16px max(16px,4vw) calc(16px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.18)}
+footer nav{display:flex;gap:22px;flex-wrap:wrap}
+footer a{text-decoration:none}
+footer a:hover{color:#fff}
+
+@media (max-width:899px){
+  footer{justify-content:center;text-align:center;font-size:13px}
+}
+/* la feuille des langues (comme le sélecteur de l'app) */
+.feuille-langues{position:fixed;inset:0;z-index:60}
+.feuille-langues[hidden]{display:none}
+.voile-langues{position:absolute;inset:0;background:rgba(0,0,0,.3);animation:voileIn .3s ease-out}
+.panneau-langues{position:absolute;left:0;right:0;bottom:0;max-height:78vh;overflow-y:auto;background:var(--mist);border-radius:24px 24px 0 0;padding:8px 16px calc(24px + env(safe-area-inset-bottom));animation:monteIn .45s cubic-bezier(.2,.9,.25,1)}
+.panneau-langues .poignee{width:40px;height:5px;border-radius:3px;background:rgba(28,28,30,.18);margin:4px auto 14px}
+.panneau-langues h2{font-family:var(--display);font-size:22px;font-weight:800;text-align:center;margin-bottom:14px}
+.toutes-langues{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+@keyframes voileIn{from{opacity:0}}
+@keyframes monteIn{from{translate:0 100%}}
+/* le sélecteur de langue, sous le badge : la langue en cours, un tap ouvre la feuille des 50 */
+.choix-langue{display:inline-flex;align-items:center;gap:8px;height:40px;margin-top:16px;padding:0 14px 0 12px;border:0;border-radius:20px;background:rgba(255,255,255,.16);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:scale .15s}
+.choix-langue:active{scale:.95}
+.choix-langue .drapeau{font-size:18px;line-height:1}
+.choix-langue .lettre{width:22px;height:22px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.22);font-size:13px}
+.choix-langue svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.8}
+.langue-puce{border:0;font-family:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;flex-shrink:0;display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 16px 0 12px;border-radius:20px;background:#fff;font-size:15px;font-weight:500;white-space:nowrap;box-shadow:0 1px 2px rgba(8,50,60,.06),0 0 0 .5px rgba(8,50,60,.08);transition:background .2s,color .2s,scale .15s}
+.langue-puce .drapeau{font-size:19px;line-height:1}
+.langue-puce .lettre{width:22px;height:22px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;background:var(--mist);color:var(--teal);font-size:13px;font-weight:700;line-height:1}
+.langue-puce.choisie .lettre{background:rgba(255,255,255,.2);color:#fff}
+.langue-puce:active{scale:.95}
+.langue-puce.choisie{background:var(--teal);color:#fff}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="feuille-langues" id="feuilleLangues" hidden>
+  <div class="voile-langues" data-ferme></div>
+  <div class="panneau-langues" role="dialog" aria-modal="true" aria-labelledby="titreLangues">
+    <div class="poignee"></div><h2 id="titreLangues"></h2>
+    <div class="toutes-langues" id="toutesLangues"></div>
+  </div>
+</div>
+
+<div class="teinte" aria-hidden="true"></div>
+<main>
+<section class="carrousel" id="carrousel">
+  <div class="tete"><img class="app-ic" src="img/icon-256.webp" alt="Scani"></div>
+  <div class="defile" id="defile">
+    <div class="diapo ecran entree" id="entree"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="01" title="The Scani camera pointed at a Japanese menu"></iframe></div></div></div></div>
+    <div class="diapo ecran" id="s02"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="02" title="A Japanese menu translated into English, with prices"></iframe></div></div></div></div>
+    <div class="diapo ecran" id="s03"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="03" title="The order written in Japanese for the staff"></iframe></div></div></div></div>
+    <div class="diapo ecran" id="s09"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="09" title="Quick phrases: toilet, water, bill and more"></iframe></div></div></div></div>
+    <div class="diapo ecran" id="s05"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="05" title="A Japanese receipt translated line by line"></iframe></div></div></div></div>
+    <div class="diapo ecran" id="s06"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="06" title="A parking sign explained section by section"></iframe></div></div></div></div>
+    <div class="diapo ecran" id="s07"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="07" title="A bento label: allergens, ingredients, details"></iframe></div></div></div></div>
+    <div class="diapo ecran" id="s08"><div class="txt"></div><div class="tel"><div class="socle"><div class="vitre"><iframe data-n="08" title="An air conditioner remote, every button explained"></iframe></div></div></div></div>
+  </div>
+  <div class="pied">
+    <a class="store" href="https://apps.apple.com/app/id6761646868" aria-label="Download on the App Store">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.63c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.47.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.12 2.76-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.66zM14.1 5.87c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.1 1.76-.96 2.8 1.01.08 2.05-.52 2.68-1.28z"/></svg>
+      <span><small>Download on the</small><b>App Store</b></span>
+    </a>
+  </div>
+  <button class="fleche" data-sens="-1" aria-label="Previous">‹</button><button class="fleche" data-sens="1" aria-label="Next">›</button>
+</section>
+
+<section class="centre kinds" id="types">
+  <div class="in">
+    <h2 class="h"><span>If it's written,</span><span class="acc">Scani reads it.</span></h2>
+    <p class="sous">50 languages.</p>
+    <div class="puces9" id="puces9"></div>
+    <a class="store fin-store" href="https://apps.apple.com/app/id6761646868" aria-label="Download on the App Store">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.63c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.47.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.12 2.76-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.66zM14.1 5.87c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.1 1.76-.96 2.8 1.01.08 2.05-.52 2.68-1.28z"/></svg>
+      <span><small>Download on the</small><b>App Store</b></span>
+    </a>
+    <div><button class="choix-langue" id="choixLangue" aria-haspopup="dialog"></button></div>
+  </div>
+  <footer>
+    <span id="android">Android coming soon</span><span>© 2026 Scani · by Mathias Merlot</span>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+      <a href="mailto:scani.app.official@gmail.com">Contact</a>
+      <a href="https://www.instagram.com/scani_app">Instagram</a>
+    </nav>
+  </footer>
+</section>
+</main>
+
+<script src="cartes.js"></script>
+<script src="langues.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c]));
+// ce qui s'anime en arrivant à l'écran : chaque diapo
+const sections = [...document.querySelectorAll('.diapo')];
+
+/* ── Le téléphone remplit la place qu'il lui reste, sans jamais déborder ── */
+// Une seule échelle pour la coque : celle qui tient dans la diapo la plus serrée — tous les téléphones
+// entiers, à la même taille. Hauteurs fixes (lvh, svh) : rien ne bouge avec la barre de Safari.
+const TW = 330, TH = 699;
+function cadrer() {
+  // la place du téléphone = la diapo moins son titre et ses marges
+  const k = Math.min(1, ...[...document.querySelectorAll('.diapo')].map(d => {
+    const cs = getComputedStyle(d), tel = d.querySelector('.tel');
+    const libre = d.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - d.querySelector('.txt').offsetHeight - parseFloat(getComputedStyle(tel).marginTop);
+    return Math.min(libre / TH, (innerWidth - 96) / TW);
+  }));
+  document.documentElement.style.setProperty('--k', k.toFixed(4));
+  // la diapo épouse le téléphone : les téléphones voisins dépassent sur les bords
+  $('#carrousel').style.setProperty('--l', Math.round(TW * k + 24) + 'px');
+}
+// les photos posées contre la coque (cartes.js), dans la langue choisie
+function poserCartes(L) {
+  document.querySelectorAll('.carte').forEach(c => c.remove());
+  document.querySelectorAll('.socle').forEach(socle => {
+    const c = CARTES[L][socle.querySelector('iframe').dataset.n];
+    if (!c) return;
+    const d = document.createElement('div');
+    d.className = 'carte';
+    Object.assign(d.style, {left: c.x + 'px', top: c.y + 'px', width: c.w + 'px', height: c.h + 'px', rotate: c.rot + 'deg'});
+    d.innerHTML = `<img src="${c.src}" alt="" style="object-position:${c.pos}">`;
+    socle.appendChild(d);
+  });
+}
+cadrer();
+addEventListener('resize', cadrer);
+
+/* ── Les neuf types (les cartes de l'onboarding) ── */
+const ICONES = {
+  menu: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
+  ticket: '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>',
+  produit: '<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.7 4.73a2 2 0 0 0 2 0L20.7 7"/>',
+  document: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8M16 13H8M16 17H8"/>',
+  panneau: '<path d="M12 13v8M12 3v3"/><path d="M4 6a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h13a2 2 0 0 0 1.15-.37l3.43-2.31a1 1 0 0 0 0-1.64l-3.43-2.31A2 2 0 0 0 17 6z"/>',
+  instructions: '<path d="M10 12h11M10 18h11M10 6h11"/><path d="M4 10h2M4 6h1v4"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/>',
+  cours: '<path d="M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
+  quiz: '<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+  appareil: '<rect width="18" height="20" x="3" y="2" rx="2"/><path d="M3 6h3M17 6h.01"/><circle cx="12" cy="13" r="5"/><path d="M12 18a2.5 2.5 0 0 0 0-5 2.5 2.5 0 0 1 0-5"/>'
+};
+const TYPES = ['menu', 'ticket', 'produit', 'document', 'panneau', 'instructions', 'cours', 'quiz', 'appareil'];
+// les pastilles sont de simples étiquettes : des liens vers le carrousel ont été essayés le 2026-10-02,
+// mais cours et quiz n'y ont pas d'écran (un bouton sur deux mort) et Safari ratait la remontée
+function remplirTypes(T) {
+  $('#puces9').innerHTML = TYPES.map((k, i) =>
+    `<div class="kind"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONES[k]}</svg><b>${esc(T.types[i][0])}</b></div>`).join('');
+}
+
+/* ── L'écran à l'écran joue, les autres se remettent à zéro ── */
+const actif = new Set();
+const envoyer = (sec, msg) => { const f = sec.querySelector('iframe'); if (f && f.contentWindow) f.contentWindow.postMessage(msg, '*'); };
+addEventListener('message', e => {           // un écran chargé après qu'on est arrivé dessus
+  if (!e.data || !e.data.pret) return;
+  sections.forEach(s => { const f = s.querySelector('iframe'); if (f && f.contentWindow === e.source && actif.has(s)) envoyer(s, 'jouer'); });
+});
+// L'écran joue UNE fois en arrivant (60 % visible, de haut en bas comme de côté) et ne se remet à zéro
+// qu'une fois sorti en entier : sinon le moindre va-et-vient le relance.
+const io = new IntersectionObserver(es => es.forEach(e => {
+  const s = e.target;
+  if (e.intersectionRatio >= .6 && !actif.has(s)) {
+    actif.add(s); s.classList.add('vu'); envoyer(s, 'jouer');
+  } else if (!e.isIntersecting && actif.has(s)) {
+    actif.delete(s); s.classList.remove('vu'); envoyer(s, 'reset');
+  }
+}), {threshold: [0, .6]});
+sections.forEach(s => io.observe(s));
+// sur la section turquoise, la page entière passe en turquoise (les barres de Safari suivent)
+new IntersectionObserver(([e]) => document.documentElement.classList.toggle('fond-turquoise', e.intersectionRatio > .5), {threshold: [.5]}).observe($('#types'));
+// le carrousel : les flèches (souris) avancent d'une diapo
+const defile = $('#defile'), diapos = [...defile.children];
+const pas = () => diapos[1].offsetLeft - diapos[0].offsetLeft;
+function centrer(d) {
+  const ecart = d.getBoundingClientRect().left - defile.getBoundingClientRect().left - (defile.clientWidth - d.offsetWidth) / 2;
+  defile.scrollTo({left: defile.scrollLeft + ecart, behavior: 'smooth'});
+}
+// un tap sur un téléphone voisin (celui qui dépasse au bord) l'amène au centre
+defile.addEventListener('click', e => { const d = e.target.closest('.diapo'); if (d && !d.classList.contains('ici')) centrer(d); });
+// la diapo du centre (son titre est le seul visible)
+function centre() { const n = Math.round(Math.abs(defile.scrollLeft) / pas()); diapos.forEach((d, j) => d.classList.toggle('ici', j === n)); }
+defile.addEventListener('scroll', () => requestAnimationFrame(centre), {passive: true});
+centre();
+const sens = () => document.documentElement.dir === 'rtl' ? -1 : 1;
+document.querySelectorAll('.fleche').forEach(b => b.onclick = () => defile.scrollBy({left: pas() * b.dataset.sens * sens(), behavior: 'smooth'}));
+
+
+/* ══ La langue ══ */
+const ORDRE = Object.keys(LANGUES).sort((a, b) => LANGUES[a].nom.localeCompare(LANGUES[b].nom));
+function detecter() {
+  for (const p of (navigator.languages || [navigator.language]).map(x => x.toLowerCase())) {
+    const [base, region] = p.split('-');
+    if (base === 'zh') return /hant|tw|hk|mo/.test(p) ? 'zh-Hant' : 'zh-Hans';
+    if (base === 'pt') return region === 'pt' ? 'pt-PT' : 'pt-BR';
+    if (['no', 'nn', 'nb'].includes(base)) return 'nb';
+    if (LANGUES[base]) return base;
+  }
+  return 'en';
+}
+const prefs = [...new Set((navigator.languages || []).map(p => {
+  const [base, region] = p.toLowerCase().split('-');
+  return base === 'zh' ? (/hant|tw|hk|mo/.test(p.toLowerCase()) ? 'zh-Hant' : 'zh-Hans') : base === 'pt' ? (region === 'pt' ? 'pt-PT' : 'pt-BR') : ['no', 'nn'].includes(base) ? 'nb' : base;
+}).filter(c => LANGUES[c]))];
+let langue = null;
+function legende(nn, balise = 'h2') {
+  const [a, b, s] = LANGUES[langue].legendes[nn];
+  return `<${balise} class="h"><span>${esc(a)}</span><span class="acc">${esc(b)}</span></${balise}><p class="sous">${esc(s)}</p>`;
+}
+function appliquer(L) {
+  langue = L;
+  const T = LANGUES[L];
+  document.documentElement.lang = L;
+  document.documentElement.dir = T.rtl ? 'rtl' : 'ltr';
+  // l'entrée : la promesse de l'onboarding et son bouton ; puis les titres des captures
+  // CE QUE FAIT L'APP en titre (le titre de l'onboarding), POURQUOI LA PRENDRE dessous
+  // (la promesse) ; pas d'espace après un point idéographique (。).
+  const promesse = T.promesse[0] + (/[。．]$/.test(T.promesse[0]) ? '' : ' ') + T.promesse[1];
+  $('#entree .txt').innerHTML = `<h1 class="h"><span>${esc(T.legendes['01'][0])}</span><span class="acc">${esc(T.legendes['01'][1])}</span></h1><p class="sous">${esc(promesse)}</p>`;
+  ['02', '03', '09', '05', '06', '07', '08'].forEach(nn => $('#s' + nn + ' .txt').innerHTML = legende(nn));
+  document.querySelectorAll('iframe[data-n]').forEach(f => { const src = `ecrans/${L}/${f.dataset.n}.html`; if (f.getAttribute('src') !== src) f.src = src; });
+  poserCartes(L);
+  $('#types .h').innerHTML = `<span>${esc(T.site.types1)}</span><span class="acc">${esc(T.site.types2)}</span>`;
+  $('#types .sous').textContent = T.legendes['10'][0];
+  remplirTypes(T);
+  $('#android').textContent = T.site.android;
+  // la langue : le sélecteur sous le badge et la feuille
+  $('#choixLangue').innerHTML = `${DRAPEAUX[L] ? `<span class="drapeau" aria-hidden="true">${DRAPEAUX[L]}</span>` : `<span class="lettre" aria-hidden="true">${LETTRES[L] || ''}</span>`}<span dir="${T.rtl ? 'rtl' : 'ltr'}">${esc(T.nom)}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
+  $('#titreLangues').textContent = T.site.choisir;
+  document.querySelectorAll('.langue-puce').forEach(b => b.classList.toggle('choisie', b.dataset.l === L));
+  requestAnimationFrame(cadrer);
+}
+
+// la langue du téléphone, d'emblée ; on la change par le lien du pied de page
+const devinee = detecter();
+// une langue n'est pas un pays : le drapeau sert juste à la repérer d'un coup d'œil
+const DRAPEAUX = {en:'🇬🇧',fr:'🇫🇷',es:'🇪🇸',de:'🇩🇪',it:'🇮🇹','pt-BR':'🇧🇷','pt-PT':'🇵🇹',nl:'🇳🇱',sv:'🇸🇪',nb:'🇳🇴',da:'🇩🇰',fi:'🇫🇮',pl:'🇵🇱',cs:'🇨🇿',sk:'🇸🇰',sl:'🇸🇮',hr:'🇭🇷',hu:'🇭🇺',ro:'🇷🇴',bg:'🇧🇬',el:'🇬🇷',ru:'🇷🇺',uk:'🇺🇦',kk:'🇰🇿',lt:'🇱🇹',tr:'🇹🇷',ar:'🇸🇦',he:'🇮🇱',ur:'🇵🇰',hi:'🇮🇳',bn:'🇧🇩',ne:'🇳🇵',th:'🇹🇭',vi:'🇻🇳',id:'🇮🇩',ms:'🇲🇾',my:'🇲🇲','zh-Hans':'🇨🇳','zh-Hant':'🇹🇼',ja:'🇯🇵',ko:'🇰🇷',ca:'🇦🇩'};
+// les langues de l'Inde (hors hindi) auraient toutes le même drapeau : une lettre de leur écriture à la place
+const LETTRES = {gu:'ગ', kn:'ಕ', ml:'മ', mr:'म', or:'ଓ', pa:'ਪ', ta:'த', te:'త'};
+const puce = c => `<button class="langue-puce" data-l="${c}" lang="${c}">${DRAPEAUX[c] ? `<span class="drapeau" aria-hidden="true">${DRAPEAUX[c]}</span>` : `<span class="lettre" aria-hidden="true">${LETTRES[c] || ''}</span>`}<span dir="${LANGUES[c].rtl ? 'rtl' : 'ltr'}">${esc(LANGUES[c].nom)}</span></button>`;
+// la feuille : la langue du téléphone et ses autres langues d'abord, puis toutes
+$('#toutesLangues').innerHTML = [...new Set([devinee, ...prefs, ...ORDRE])].map(puce).join('');
+const feuille = $('#feuilleLangues');
+const ouvrirLangues = () => { feuille.hidden = false; };
+const fermerLangues = () => { feuille.hidden = true; };
+$('#choixLangue').addEventListener('click', ouvrirLangues);
+feuille.addEventListener('click', e => {
+  const b = e.target.closest('.langue-puce');
+  if (b) { appliquer(b.dataset.l); fermerLangues(); }
+  else if (e.target.closest('[data-ferme]')) fermerLangues();
+});
+addEventListener('keydown', e => { if (e.key === 'Escape') fermerLangues(); });
+
+
+appliquer(devinee);
+</script>
+</body>
+</html>

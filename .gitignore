@@ -1,0 +1,4 @@
+# Lien Vercel (aperçu) : identifiants du projet, pas pour GitHub
+.vercel/
+__pycache__/
+.DS_Store
