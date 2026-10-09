@@ -10,9 +10,9 @@ from shutil import copy
 from bs4 import BeautifulSoup
 
 ICI = os.path.dirname(os.path.abspath(__file__))
-BANC = os.path.expanduser('~/Documents/Scani2.0/bancs/captures-2026-09-30/')
+BANC = os.path.expanduser('~/Developer/Scani/Scani_Data/bancs/captures-2026-09-30/')
 PHOTOS = BANC + 'photos/'
-APP = os.path.expanduser('~/Developer/AppleOCRTest/AppleOCRTest/')
+APP = os.path.expanduser('~/Developer/Scani/Scani_IOS/AppleOCRTest/')
 sys.path.insert(0, BANC); sys.path.insert(0, ICI)
 from textes import TITRES          # les titres des captures, par langue
 from site_textes import SITE       # les quelques phrases propres au site
