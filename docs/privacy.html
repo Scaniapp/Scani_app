@@ -31,7 +31,7 @@
   <!-- Venu du site : un vrai RETOUR (la page revient telle quelle, au même endroit, sans recharger) ;
        arrivé ici directement : l'accueil. -->
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: October 23, 2026</p>
+  <p class="updated">Last updated: November 18, 2026</p>
 
   <p>Scani ("we", "our", "the app") is a translation app that reads any photo with text — menus, receipts, signs, documents and more. Your privacy matters to us.</p>
 
@@ -67,6 +67,16 @@
     <li>Google AdMob (advertising)</li>
     <li>Google Search (photos of a dish or item, loaded in an embedded web page when you tap it — Google receives the item name, your IP address and its own cookies, under Google's privacy policy)</li>
     <li>Supabase (storage of anonymous usage data, scan images and scan content)</li>
+  </ul>
+
+  <h2>On Android</h2>
+  <p>The sections above describe Scani on iPhone. On Android, Scani works the same way, with these differences:</p>
+  <ul>
+    <li>Genuine-app check: Firebase App Check uses Google Play Integrity instead of Apple's App Attest; a device attestation is exchanged with Google.</li>
+    <li>On-device reading: text on the photo you are viewing is recognized on your device by Google ML Kit, which may send Google limited usage and diagnostic information (such as an installation identifier, processing time and error codes). Pronunciation uses your phone's built-in text-to-speech.</li>
+    <li>Advertising: there is no App Tracking Transparency prompt. Where required, Google's consent form is shown first, as described above. AdMob may use your device's advertising identifier, which you can reset or delete at any time in your phone's settings (Privacy › Ads).</li>
+    <li>Anonymous identifier: it is kept in the app's own storage and is deleted when you uninstall Scani.</li>
+    <li>Update check: the version file fetched at launch is version-android.json on scaniapp.com.</li>
   </ul>
 
   <h2>Who We Are</h2>
