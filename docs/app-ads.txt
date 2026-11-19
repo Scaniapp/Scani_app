@@ -165,3 +165,43 @@ xandr.com, 17779, RESELLER
 xandr.com, 7353, RESELLER
 zetaglobal.net, 525, RESELLER
 zmaticoo.com, 5135195, RESELLER
+
+# Adagio (médiation AdMob, 19/11)
+adagio.io, 2158, DIRECT
+adagio.io, 2158-OB, RESELLER
+rubiconproject.com, 19116, RESELLER, 0bfd66d529a55807
+pubmatic.com, 159110, RESELLER, 5d62403b186f2ace
+improvedigital.com, 1790, RESELLER
+onetag.com, 6b859b96c564fbe, RESELLER
+appnexus.com, 13099, RESELLER
+rubiconproject.com, 11006, RESELLER, 0bfd66d529a55807
+pubmatic.com, 161593, RESELLER, 5d62403b186f2ace
+smartadserver.com, 3554, RESELLER
+sharethrough.com, 3554, RESELLER, d53b998a7bd4ecd2
+lijit.com, 367236, RESELLER, fafdf38b16bf6b2b
+rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
+pubmatic.com, 156212, RESELLER, 5d62403b186f2ace
+pubmatic.com, 137711, RESELLER, 5d62403b186f2ace
+openx.com, 538959099, RESELLER, 6a698e2ec38604c6
+openx.com, 558899373, RESELLER, 6a698e2ec38604c6
+triplelift.com, 13482, RESELLER, 6c33edb13117fd86
+video.unrulymedia.com, 5672421953199218469, RESELLER
+rtbhouse.com, XPSLDtnX92XNGGFB6ith, RESELLER, 4f3b94578e85950c
+freewheel.tv, 536359-r-524565, RESELLER
+freewheel.tv, 536359-r-523319, RESELLER
+adform.com, 3354, RESELLER, 9f5210a2f0999e32
+
+# OneTag (médiation AdMob, 19/11)
+onetag.com, 98907bffe57faa9, DIRECT
+onetag.com, 98907bffe57faa9-OB, DIRECT
+video.unrulymedia.com, 586616193, RESELLER
+smartadserver.com, 4111, RESELLER
+
+# PubMatic (médiation AdMob, approuvé 19/11)
+pubmatic.com, 159856, DIRECT, 5d62403b186f2ace
+
+# Equativ + Sharethrough (médiation AdMob, e-mail Equativ 19/11)
+smartadserver.com, 4194-OB, RESELLER, 060d053dcf45cbf3
+smartadserver.com, 4194, RESELLER, 060d053dcf45cbf3
+sharethrough.com, 4194-OB, RESELLER, 060d053dcf45cbf3
+sharethrough.com, 4194, RESELLER, 060d053dcf45cbf3
