@@ -205,3 +205,9 @@ smartadserver.com, 4194-OB, RESELLER, 060d053dcf45cbf3
 smartadserver.com, 4194, RESELLER, 060d053dcf45cbf3
 sharethrough.com, 4194-OB, RESELLER, 060d053dcf45cbf3
 sharethrough.com, 4194, RESELLER, 060d053dcf45cbf3
+
+# OpenX (médiation AdMob, e-mail OpenX 20/11)
+openx.com, 663056182, DIRECT, 6a698e2ec38604c6
+
+# Magnite DV+ (médiation AdMob, e-mail Magnite 19/11)
+rubiconproject.com, 22884, DIRECT, 0bfd66d529a55807
