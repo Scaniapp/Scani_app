@@ -211,3 +211,6 @@ openx.com, 663056182, DIRECT, 6a698e2ec38604c6
 
 # Magnite DV+ (médiation AdMob, e-mail Magnite 19/11)
 rubiconproject.com, 22884, DIRECT, 0bfd66d529a55807
+
+# InMobi Exchange (médiation AdMob, compte InMobi 25/11)
+inmobi.com, 57e46d8801804be5a86b49766ae7a9aa, DIRECT, 83e75a7ae333ca9d
